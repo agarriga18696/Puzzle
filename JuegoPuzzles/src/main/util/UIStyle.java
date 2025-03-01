@@ -1,0 +1,140 @@
+package main.util;
+
+import javax.swing.*;
+import javax.swing.border.Border;
+import javax.swing.border.EmptyBorder;
+
+import main.audio.SoundEffects;
+
+import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.io.File;
+
+public class UIStyle {
+
+	/*
+	 * Diseño de la interfaz: fuentes, esquema de colores, etc.
+	 * 
+	 */
+
+	// Paleta de colores.
+	public static final Color PRIMARY_COLOR = new Color(0x9EB380);
+	public static final Color SECONDARY_COLOR = new Color(0x6F7E5B);
+	public static final Color BUTTON_COLOR = new Color(0xAC9076);
+	public static final Color BUTTON_TEXT_COLOR = Color.WHITE;
+	public static final Color TEXT_COLOR = new Color(0x2B2822);
+	public static final Color BACKGROUND_COLOR = Color.WHITE;
+	public static final Color BOARD_BG_COLOR = new Color(0xF7F7F7);
+
+	// Fuentes.
+	public static Font REGULAR_FONT;
+	public static Font BOLD_FONT;
+	public static Font EXTRA_BOLD_FONT;
+	static {
+		try {
+			// Cargar las fuentes desde los archivos .ttf.
+			File f1 = new File("src/resources/fonts/Anaheim-Medium.ttf");
+			File f2 = new File("src/resources/fonts/Anaheim-Bold.ttf");
+			File f3 = new File("src/resources/fonts/Anaheim-ExtraBold.ttf");
+			
+			Font baseFont1 = Font.createFont(Font.TRUETYPE_FONT, f1);
+			Font baseFont2 = Font.createFont(Font.TRUETYPE_FONT, f2);
+			Font baseFont3 = Font.createFont(Font.TRUETYPE_FONT, f3);
+			
+			REGULAR_FONT = baseFont1.deriveFont(14f);
+			BOLD_FONT = baseFont2.deriveFont(14f);
+			EXTRA_BOLD_FONT = baseFont3.deriveFont(14f);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			// Si falla, usar SansSerif por defecto.
+			REGULAR_FONT = new Font("SansSerif", Font.PLAIN, 14);
+		}
+	}
+
+	public static final Font TITLE_FONT = EXTRA_BOLD_FONT.deriveFont(32f);
+	public static final Font BUTTON_FONT = BOLD_FONT.deriveFont(18f);
+	public static final Font DEFAULT_FONT = REGULAR_FONT.deriveFont(14f);
+
+	// Bordes y padding.
+	public static final Border NO_BORDER = BorderFactory.createEmptyBorder();
+	public static final Border PANEL_PADDING = new EmptyBorder(20, 20, 20, 20);
+
+	/*
+	 * 
+	 * COMPONENTES
+	 * 
+	 */
+
+	// Panel.
+	public static void applyPanelStyle(JPanel panel) {
+		panel.setBackground(BACKGROUND_COLOR);
+		panel.setBorder(PANEL_PADDING);
+	}
+
+	// Botón.
+	public static JButton createStyledButton(String text, Color bgColor) {
+		JButton button = new JButton(text.toUpperCase());
+		button.setBackground(bgColor);
+		button.setForeground(BUTTON_TEXT_COLOR);
+		button.setFont(BUTTON_FONT);
+		button.setMaximumSize(new Dimension(200, 40));
+		button.setFocusable(false);
+		button.setFocusPainted(false);
+		button.setBorder(BorderFactory.createEmptyBorder(10, 20, 10, 20));
+		button.setBorderPainted(false);
+		button.setCursor(new Cursor(Cursor.HAND_CURSOR));
+		button.setContentAreaFilled(false);
+		button.setOpaque(true);
+		
+		button.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mousePressed(MouseEvent e) {
+				button.setBackground(new Color(bgColor.getRed() + 20, bgColor.getGreen() + 20, bgColor.getBlue() + 20, bgColor.getAlpha()));
+				
+				// SFX click.
+				SoundEffects.playSound("button_click.wav");
+			};
+			
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				button.setBackground(new Color(bgColor.getRed() + 10, bgColor.getGreen() + 10, bgColor.getBlue() + 10, bgColor.getAlpha()));
+				
+				// SFX hover.
+				SoundEffects.playSound("button_hover.wav");
+			}
+
+			@Override
+			public void mouseExited(MouseEvent e) {
+				button.setBackground(bgColor);
+			}
+		});
+
+		return button;
+	}
+	
+	// Label.
+	public static JLabel createStyledLabel(String text, Font font, Color color) {
+		JLabel label = new JLabel(text, SwingConstants.CENTER);
+		label.setFont(font);
+		label.setForeground(color);
+
+		return label;
+	}
+
+	// Slider.
+	public static void styleSlider(JSlider slider) {
+		slider.setForeground(TEXT_COLOR);
+		slider.setFont(DEFAULT_FONT);
+		slider.setBackground(BACKGROUND_COLOR);
+		slider.setBorder(new EmptyBorder(5, 5, 5, 5));
+		slider.setMajorTickSpacing(10);
+		slider.setMinorTickSpacing(10);
+		slider.setSnapToTicks(true);
+		slider.setPaintTicks(true);
+		slider.setPaintLabels(true);
+	}
+
+
+}
