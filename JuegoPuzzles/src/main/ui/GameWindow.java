@@ -83,34 +83,58 @@ public class GameWindow extends JFrame {
 		NavigationMenuPanel navPanel = new NavigationMenuPanel(this);
 		add(navPanel, BorderLayout.NORTH);
 
+		// Panel CardLayout que servirá para mostrar los demás paneles.
+		JPanel cardLayoutPanel = configCardLayoutPanel();
+		
+		// Panel Bienvenida.
+		JPanel welcomePanel = configWelcomePanel();
+
+		// Añadir paneles al CardLayout.
+		cardLayoutPanel.add(welcomePanel, "welcomePanel");
+		
+		// Añadir el panel cardLayout a la ventana.
+		add(cardLayoutPanel, BorderLayout.CENTER);
+		//add(mainPanel, BorderLayout.CENTER);
+
+		setVisible(true);
+	}
+	
+	// CardLayout.
+	private JPanel configCardLayoutPanel() {
+		JPanel cardLayoutPanel = new JPanel();
+		cardLayoutPanel.setLayout(new CardLayout());
+		
+		return cardLayoutPanel;
+	}
+
+	// Panel de Bienvenida.
+	private JPanel configWelcomePanel() {
 		// Panel principal de bienvenida.
-		JPanel mainPanel = new BackgroundPanel("background.png", 0.25);
-		mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
-		UIStyle.applyPanelStyle(mainPanel);
+		JPanel welcomePanel = new JPanel();
+		welcomePanel.setLayout(new BoxLayout(welcomePanel, BoxLayout.Y_AXIS));
+		UIStyle.applyPanelStyle(welcomePanel);
 
 		// Label de bienvenida.
 		JLabel welcomeLabel = UIStyle.createStyledLabel("¡TE DAMOS LA BIENVENIDA!", UIStyle.TITLE_FONT, UIStyle.SECONDARY_COLOR);
 		welcomeLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
-		mainPanel.add(Box.createVerticalStrut(100));
-		mainPanel.add(welcomeLabel);
-		mainPanel.add(Box.createVerticalStrut(25));
+		welcomePanel.add(Box.createVerticalStrut(100));
+		welcomePanel.add(welcomeLabel);
+		welcomePanel.add(Box.createVerticalStrut(25));
 
 		// Label de bienvenida.
 		JLabel welcomeLabel2 = UIStyle.createStyledLabel("Para iniciar una nueva partida pulsa el botón JUGAR", UIStyle.DEFAULT_FONT, UIStyle.TEXT_COLOR);
 		welcomeLabel2.setAlignmentX(Component.CENTER_ALIGNMENT);
-		mainPanel.add(welcomeLabel2);
-		mainPanel.add(Box.createVerticalStrut(25));
+		welcomePanel.add(welcomeLabel2);
+		welcomePanel.add(Box.createVerticalStrut(25));
 
 		// Botón JUGAR.
 		JButton newPuzzleButton = UIStyle.createStyledButton("JUGAR", UIStyle.BUTTON_COLOR);
 		newPuzzleButton.setAlignmentX(Component.CENTER_ALIGNMENT);
 		newPuzzleButton.addActionListener(e -> new PuzzleConfigWindow(this, gameController));
-		mainPanel.add(Box.createVerticalStrut(20));
-		mainPanel.add(newPuzzleButton);
+		welcomePanel.add(Box.createVerticalStrut(20));
+		welcomePanel.add(newPuzzleButton);
 
-		add(mainPanel, BorderLayout.CENTER);
-
-		setVisible(true);
+		return welcomePanel;
 	}
 
 	// Método para mostrar el puzzle.

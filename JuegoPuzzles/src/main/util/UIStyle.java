@@ -11,7 +11,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
 
-public class UIStyle {
+public final class UIStyle {
 
 	/*
 	 * Diseño de la interfaz: fuentes, esquema de colores, etc.
@@ -69,8 +69,9 @@ public class UIStyle {
 
 	// Panel.
 	public static void applyPanelStyle(JPanel panel) {
-		panel.setBackground(BACKGROUND_COLOR);
+		//panel.setBackground(BACKGROUND_COLOR);
 		panel.setBorder(PANEL_PADDING);
+		panel = new BackgroundPanel("background.png", 0.25);
 	}
 
 	// Botón.
