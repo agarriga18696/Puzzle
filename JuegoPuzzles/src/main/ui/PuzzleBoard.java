@@ -5,6 +5,8 @@ import main.model.PuzzlePiece;
 import main.util.UIStyle;
 
 import javax.swing.*;
+import javax.swing.border.EmptyBorder;
+
 import java.awt.*;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
@@ -38,7 +40,6 @@ public class PuzzleBoard extends JPanel {
 
 		// Panel del tablero.
 		JPanel centerPanel = new JPanel(null);
-		UIStyle.applyPanelStyle(centerPanel);
 		centerPanel.setBackground(UIStyle.BACKGROUND_COLOR);
 
 		// Determinar la cuadrícula.
@@ -105,6 +106,7 @@ public class PuzzleBoard extends JPanel {
 		timerLabel.setText(text);
 	}
 
+	// Método para reposicionar y reescalar el tablero.
 	private void repositionAndRescale() {
 		int newBW = getWidth() - 100;
 		int newBH = getHeight() - 100;
@@ -131,6 +133,7 @@ public class PuzzleBoard extends JPanel {
 
 			view.setLocation(newX,newY);
 		}
+		
 		revalidate();
 		repaint();
 	}

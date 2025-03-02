@@ -25,19 +25,24 @@ public class SettingsWindow extends JFrame {
 		setResizable(false);
 		setLocationRelativeTo(null);
 		setLayout(new GridLayout(9,1));
+		getContentPane().setBackground(UIStyle.BACKGROUND_COLOR);
 
 		// Selector de resoluciones.
-		JLabel resolutionLabel = UIStyle.createStyledLabel("Resolución:", UIStyle.DEFAULT_FONT, UIStyle.TEXT_COLOR);
+		JLabel resolutionLabel = UIStyle.createStyledHeadingLabel("Pantalla");
 		add(resolutionLabel);	
 
 		resolutionCombo = new JComboBox<>(new String[]{"800x600", "1024x768", "1280x720", "1920x1080", "2560x1440", "3840x2160"});
 		resolutionCombo.setSelectedItem(SettingsManager.getSetting("resolution","800x600"));
+		resolutionCombo.setFont(UIStyle.DEFAULT_FONT);
+		resolutionCombo.setFocusable(false);
+		resolutionCombo.setBorder(UIStyle.NO_BORDER);
 		resolutionCombo.setRenderer(new DefaultListCellRenderer() {
 			@Override
 			public Component getListCellRendererComponent(JList<?> list, Object value, int index,
 					boolean isSelected, boolean cellHasFocus) {
 				JLabel lbl = (JLabel) super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
 				lbl.setHorizontalAlignment(SwingConstants.CENTER);
+				lbl.setFont(UIStyle.DEFAULT_FONT);
 
 				return lbl;
 			}
@@ -50,11 +55,19 @@ public class SettingsWindow extends JFrame {
 		// Checkbox Pantalla Completa.
 		fullscreenCheck = new JCheckBox("Pantalla Completa", SettingsManager.getBoolean("fullscreen",false));
 		fullscreenCheck.setHorizontalAlignment(SwingConstants.CENTER);
+		fullscreenCheck.setFont(UIStyle.DEFAULT_FONT);
+		fullscreenCheck.setBackground(getContentPane().getBackground());
+		fullscreenCheck.setFocusable(false);
+		fullscreenCheck.setFocusPainted(false);
 		checkPanel.add(fullscreenCheck);
 
 		// Checkbox Ventana sin bordes.
 		borderlessCheck = new JCheckBox("Ventana sin bordes", SettingsManager.getBoolean("borderless",false));
 		borderlessCheck.setHorizontalAlignment(SwingConstants.CENTER);
+		borderlessCheck.setFont(UIStyle.DEFAULT_FONT);
+		borderlessCheck.setBackground(getContentPane().getBackground());
+		borderlessCheck.setFocusable(false);
+		borderlessCheck.setFocusPainted(false);
 		checkPanel.add(borderlessCheck);
 		
 		add(checkPanel);
@@ -67,21 +80,25 @@ public class SettingsWindow extends JFrame {
 		}
 
 		// Label Volumen Música.
-		JLabel musicLabel = new JLabel("Volumen Música:", SwingConstants.CENTER);
+		JLabel musicLabel = UIStyle.createStyledHeadingLabel("Volumen Música");
+		musicLabel.setFont(UIStyle.HEADING_FONT);
 		add(musicLabel);
 
 		// Slider Música.
 		musicVolumeSlider = new JSlider(0,100, SettingsManager.getInt("musicVolume",50));
-		UIStyle.styleSlider(musicVolumeSlider);
+		musicVolumeSlider.setFont(UIStyle.DEFAULT_FONT);
+		UIStyle.createStyledSlider(musicVolumeSlider);
 		add(musicVolumeSlider);
 
 		// Label Volumen SFX.
-		JLabel sfxLabel = new JLabel("Volumen Efectos:", SwingConstants.CENTER);
+		JLabel sfxLabel = UIStyle.createStyledHeadingLabel("Volumen Efectos");
+		sfxLabel.setFont(UIStyle.HEADING_FONT);
 		add(sfxLabel);
 
 		// Slider SFX.
 		sfxVolumeSlider = new JSlider(0,100, SettingsManager.getInt("sfxVolume",50));
-		UIStyle.styleSlider(sfxVolumeSlider);
+		sfxVolumeSlider.setFont(UIStyle.DEFAULT_FONT);
+		UIStyle.createStyledSlider(sfxVolumeSlider);
 		add(sfxVolumeSlider);
 
 		// Espaciador.

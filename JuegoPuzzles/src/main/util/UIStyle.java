@@ -22,10 +22,9 @@ public final class UIStyle {
 	public static final Color PRIMARY_COLOR = new Color(0x9EB380);
 	public static final Color SECONDARY_COLOR = new Color(0x6F7E5B);
 	public static final Color BUTTON_COLOR = new Color(0xAC9076);
-	public static final Color BUTTON_TEXT_COLOR = Color.WHITE;
+	public static final Color BUTTON_TEXT_COLOR = new Color(0xFFFFFF);
 	public static final Color TEXT_COLOR = new Color(0x2B2822);
-	public static final Color BACKGROUND_COLOR = Color.WHITE;
-	public static final Color BOARD_BG_COLOR = new Color(0xF7F7F7);
+	public static final Color BACKGROUND_COLOR = new Color(0xF7F7F7);
 
 	// Fuentes.
 	public static Font REGULAR_FONT;
@@ -37,11 +36,11 @@ public final class UIStyle {
 			File f1 = new File("src/resources/fonts/Anaheim-Medium.ttf");
 			File f2 = new File("src/resources/fonts/Anaheim-Bold.ttf");
 			File f3 = new File("src/resources/fonts/Anaheim-ExtraBold.ttf");
-			
+
 			Font baseFont1 = Font.createFont(Font.TRUETYPE_FONT, f1);
 			Font baseFont2 = Font.createFont(Font.TRUETYPE_FONT, f2);
 			Font baseFont3 = Font.createFont(Font.TRUETYPE_FONT, f3);
-			
+
 			REGULAR_FONT = baseFont1.deriveFont(14f);
 			BOLD_FONT = baseFont2.deriveFont(14f);
 			EXTRA_BOLD_FONT = baseFont3.deriveFont(14f);
@@ -54,12 +53,24 @@ public final class UIStyle {
 	}
 
 	public static final Font TITLE_FONT = EXTRA_BOLD_FONT.deriveFont(32f);
-	public static final Font BUTTON_FONT = BOLD_FONT.deriveFont(18f);
-	public static final Font DEFAULT_FONT = REGULAR_FONT.deriveFont(14f);
+	public static final Font HEADING_FONT = BOLD_FONT.deriveFont(18f);
+	public static final Font DEFAULT_FONT = REGULAR_FONT.deriveFont(16f);
 
 	// Bordes y padding.
 	public static final Border NO_BORDER = BorderFactory.createEmptyBorder();
 	public static final Border PANEL_PADDING = new EmptyBorder(20, 20, 20, 20);
+
+	public static Border CUSTOM_PADDING(int... padding) {
+		int paddings[] = new int[4];
+
+		for(int i = 0; i < paddings.length; i++) {
+			for(int j = 0; j < padding.length; j++) {
+				paddings[i] = padding[j];
+			}
+		}
+
+		return new EmptyBorder(paddings[0], paddings[1], paddings[2], paddings[3]);
+	}
 
 	/*
 	 * 
@@ -68,10 +79,10 @@ public final class UIStyle {
 	 */
 
 	// Panel.
-	public static void applyPanelStyle(JPanel panel) {
-		//panel.setBackground(BACKGROUND_COLOR);
+	public static JPanel createStyledPanel() {
+		JPanel panel = new BackgroundPanel("background.png", 0.25);
 		panel.setBorder(PANEL_PADDING);
-		panel = new BackgroundPanel("background.png", 0.25);
+		return panel;
 	}
 
 	// Botón.
@@ -79,7 +90,7 @@ public final class UIStyle {
 		JButton button = new JButton(text.toUpperCase());
 		button.setBackground(bgColor);
 		button.setForeground(BUTTON_TEXT_COLOR);
-		button.setFont(BUTTON_FONT);
+		button.setFont(HEADING_FONT);
 		button.setMaximumSize(new Dimension(200, 40));
 		button.setFocusable(false);
 		button.setFocusPainted(false);
@@ -88,20 +99,20 @@ public final class UIStyle {
 		button.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		button.setContentAreaFilled(false);
 		button.setOpaque(true);
-		
+
 		button.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mousePressed(MouseEvent e) {
 				button.setBackground(new Color(bgColor.getRed() + 20, bgColor.getGreen() + 20, bgColor.getBlue() + 20, bgColor.getAlpha()));
-				
+
 				// SFX click.
 				SoundEffects.playSound("button_click.wav");
 			};
-			
+
 			@Override
 			public void mouseEntered(MouseEvent e) {
 				button.setBackground(new Color(bgColor.getRed() + 10, bgColor.getGreen() + 10, bgColor.getBlue() + 10, bgColor.getAlpha()));
-				
+
 				// SFX hover.
 				SoundEffects.playSound("button_hover.wav");
 			}
@@ -114,7 +125,53 @@ public final class UIStyle {
 
 		return button;
 	}
-	
+
+	// Botón de título.
+	public static JButton createStyledTitleButton(String text) {
+		JButton titleButton = new JButton(text);
+		titleButton.setFont(TITLE_FONT.deriveFont(64f));
+		titleButton.setForeground(BUTTON_TEXT_COLOR);
+		titleButton.setOpaque(false);
+		titleButton.setContentAreaFilled(false);
+		titleButton.setBorderPainted(false);
+		titleButton.setFocusPainted(false);
+		titleButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
+
+		titleButton.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mousePressed(MouseEvent e) {
+				Color current = titleButton.getForeground();
+				int r = Math.min(current.getRed() - 20, 255);
+				int g = Math.min(current.getGreen() - 20, 255);
+				int b = Math.min(current.getBlue() - 20, 255);
+				titleButton.setBackground(new Color(r, g, b, current.getAlpha()));
+
+				// SFX click.
+				SoundEffects.playSound("button_click.wav");
+			};
+
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				Color current = titleButton.getForeground();
+				int r = Math.min(current.getRed() - 10, 255);
+				int g = Math.min(current.getGreen() - 10, 255);
+				int b = Math.min(current.getBlue() - 10, 255);
+				titleButton.setForeground(new Color(r, g, b, current.getAlpha()));
+
+				// SFX hover.
+				SoundEffects.playSound("button_hover.wav");
+			}
+
+			@Override
+			public void mouseExited(MouseEvent e) {
+				titleButton.setForeground(BUTTON_TEXT_COLOR);
+				titleButton.setBackground(titleButton.getForeground());
+			}
+		});
+
+		return titleButton;
+	}
+
 	// Label.
 	public static JLabel createStyledLabel(String text, Font font, Color color) {
 		JLabel label = new JLabel(text, SwingConstants.CENTER);
@@ -124,11 +181,21 @@ public final class UIStyle {
 		return label;
 	}
 
+	// Label de Cabecera.
+	public static JLabel createStyledHeadingLabel(String text) {
+		JLabel label = new JLabel(text.toUpperCase(), SwingConstants.CENTER);
+		label.setFont(HEADING_FONT);
+		label.setForeground(SECONDARY_COLOR);
+		label.setOpaque(false);
+
+		return label;
+	}
+
 	// Slider.
-	public static void styleSlider(JSlider slider) {
+	public static void createStyledSlider(JSlider slider) {
 		slider.setForeground(TEXT_COLOR);
 		slider.setFont(DEFAULT_FONT);
-		slider.setBackground(BACKGROUND_COLOR);
+		slider.setOpaque(false);
 		slider.setBorder(new EmptyBorder(5, 5, 5, 5));
 		slider.setMajorTickSpacing(10);
 		slider.setMinorTickSpacing(10);

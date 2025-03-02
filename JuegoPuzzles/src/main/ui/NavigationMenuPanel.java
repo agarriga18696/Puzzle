@@ -18,8 +18,10 @@ public class NavigationMenuPanel extends JPanel {
 
 		// Panel izquierdo: contendrá el botón OPCIONES alineado a la izquierda.
 		JPanel leftPanel = new JPanel(new GridBagLayout());
+		leftPanel.setBackground(Color.RED);
 		leftPanel.setOpaque(false);
-		leftPanel.setPreferredSize(new Dimension(200, 85));
+		leftPanel.setMaximumSize(new Dimension(200, 85));
+		leftPanel.setPreferredSize(new Dimension(180, 85));
 		leftPanel.setBorder(new EmptyBorder(0, 20, 0, 20));
 		GridBagConstraints gbcLeft = new GridBagConstraints();
 		gbcLeft.gridx = 0;
@@ -33,28 +35,25 @@ public class NavigationMenuPanel extends JPanel {
 
 		// Panel central: contendrá el botón TÍTULO "PUZZLE" centrado.
 		JPanel centerPanel = new JPanel(new GridBagLayout());
+		//centerPanel.setBackground(Color.YELLOW);
 		centerPanel.setOpaque(false);
-		centerPanel.setPreferredSize(new Dimension(200, 85));
+		centerPanel.setMaximumSize(new Dimension(400, 85));
+		centerPanel.setPreferredSize(new Dimension(280, 85));
 		GridBagConstraints gbcCenter = new GridBagConstraints();
 		gbcCenter.gridx = 0;
 		gbcCenter.gridy = 0;
 		gbcCenter.weightx = 1.0;
 		gbcCenter.fill = GridBagConstraints.HORIZONTAL;
 		gbcCenter.anchor = GridBagConstraints.CENTER;
-		JButton titleButton = new JButton("PUZZLE");
-		titleButton.setFont(UIStyle.TITLE_FONT.deriveFont(64f));
-		titleButton.setForeground(UIStyle.BUTTON_TEXT_COLOR);
-		titleButton.setOpaque(false);
-		titleButton.setContentAreaFilled(false);
-		titleButton.setBorderPainted(false);
-		titleButton.setFocusPainted(false);
-		titleButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
+		JButton titleButton = UIStyle.createStyledTitleButton("PUZZLES");
 		centerPanel.add(titleButton, gbcCenter);
 
 		// Panel derecho: contendrá el botón SALIR alineado a la derecha.
 		JPanel rightPanel = new JPanel(new GridBagLayout());
+		rightPanel.setBackground(Color.BLUE);
 		rightPanel.setOpaque(false);
-		rightPanel.setPreferredSize(new Dimension(200, 85));
+		rightPanel.setMaximumSize(new Dimension(200, 85));
+		rightPanel.setPreferredSize(new Dimension(180, 85));
 		rightPanel.setBorder(new EmptyBorder(0, 20, 0, 20));
 		GridBagConstraints gbcRight = new GridBagConstraints();
 		gbcRight.gridx = 0;

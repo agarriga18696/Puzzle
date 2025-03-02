@@ -110,9 +110,8 @@ public class GameWindow extends JFrame {
 	// Panel de Bienvenida.
 	private JPanel configWelcomePanel() {
 		// Panel principal de bienvenida.
-		JPanel welcomePanel = new JPanel();
+		JPanel welcomePanel = UIStyle.createStyledPanel();
 		welcomePanel.setLayout(new BoxLayout(welcomePanel, BoxLayout.Y_AXIS));
-		UIStyle.applyPanelStyle(welcomePanel);
 
 		// Label de bienvenida.
 		JLabel welcomeLabel = UIStyle.createStyledLabel("¡TE DAMOS LA BIENVENIDA!", UIStyle.TITLE_FONT, UIStyle.SECONDARY_COLOR);
