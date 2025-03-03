@@ -29,7 +29,7 @@ public class NavigationMenuPanel extends JPanel {
 		gbcLeft.weightx = 1.0;
 		gbcLeft.fill = GridBagConstraints.HORIZONTAL;
 		gbcLeft.anchor = GridBagConstraints.WEST;
-		JButton optionsButton  = UIStyle.createStyledButton("OPCIONES", UIStyle.SECONDARY_COLOR);
+		JButton optionsButton  = UIStyle.defaultButton("OPCIONES", UIStyle.SECONDARY_COLOR);
 		optionsButton.addActionListener(e -> new SettingsWindow(gameWindow));
 		leftPanel.add(optionsButton, gbcLeft);
 
@@ -45,7 +45,7 @@ public class NavigationMenuPanel extends JPanel {
 		gbcCenter.weightx = 1.0;
 		gbcCenter.fill = GridBagConstraints.HORIZONTAL;
 		gbcCenter.anchor = GridBagConstraints.CENTER;
-		JButton titleButton = UIStyle.createStyledTitleButton("PUZZLES");
+		JButton titleButton = UIStyle.titleButton("PUZZLES");
 		centerPanel.add(titleButton, gbcCenter);
 
 		// Panel derecho: contendrá el botón SALIR alineado a la derecha.
@@ -61,7 +61,7 @@ public class NavigationMenuPanel extends JPanel {
 		gbcRight.weightx = 1.0;
 		gbcRight.fill = GridBagConstraints.HORIZONTAL;
 		gbcRight.anchor = GridBagConstraints.EAST;
-		JButton exitButton = UIStyle.createStyledButton("SALIR", UIStyle.SECONDARY_COLOR);
+		JButton exitButton = UIStyle.defaultButton("SALIR", UIStyle.SECONDARY_COLOR);
 		exitButton.addActionListener(e -> {
 			int confirm = JOptionPane.showConfirmDialog(gameWindow, "¿Seguro que quieres salir?", "Salir", JOptionPane.YES_NO_OPTION);
 			if (confirm == JOptionPane.YES_OPTION) {

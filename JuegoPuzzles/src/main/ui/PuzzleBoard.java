@@ -34,7 +34,7 @@ public class PuzzleBoard extends JPanel {
 		this.puzzle = puzzle;
 
 		// Label del cronómetro.
-		timerLabel = UIStyle.createStyledLabel("Tiempo restante: ", UIStyle.DEFAULT_FONT, Color.black);
+		timerLabel = UIStyle.timerLabel();
 		timerLabel.setOpaque(true);
 		add(timerLabel, BorderLayout.NORTH);
 

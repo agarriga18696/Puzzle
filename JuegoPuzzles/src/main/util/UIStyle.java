@@ -27,9 +27,9 @@ public final class UIStyle {
 	public static final Color BACKGROUND_COLOR = new Color(0xF7F7F7);
 
 	// Fuentes.
-	public static Font REGULAR_FONT;
-	public static Font BOLD_FONT;
-	public static Font EXTRA_BOLD_FONT;
+	private static Font _REGULAR_FONT;
+	private static Font _BOLD_FONT;
+	private static Font _EXTRA_BOLD_FONT;
 	static {
 		try {
 			// Cargar las fuentes desde los archivos .ttf.
@@ -41,20 +41,21 @@ public final class UIStyle {
 			Font baseFont2 = Font.createFont(Font.TRUETYPE_FONT, f2);
 			Font baseFont3 = Font.createFont(Font.TRUETYPE_FONT, f3);
 
-			REGULAR_FONT = baseFont1.deriveFont(14f);
-			BOLD_FONT = baseFont2.deriveFont(14f);
-			EXTRA_BOLD_FONT = baseFont3.deriveFont(14f);
+			_REGULAR_FONT = baseFont1.deriveFont(14f);
+			_BOLD_FONT = baseFont2.deriveFont(14f);
+			_EXTRA_BOLD_FONT = baseFont3.deriveFont(14f);
 
 		} catch (Exception e) {
 			e.printStackTrace();
 			// Si falla, usar SansSerif por defecto.
-			REGULAR_FONT = new Font("SansSerif", Font.PLAIN, 14);
+			_REGULAR_FONT = new Font("SansSerif", Font.PLAIN, 14);
 		}
 	}
 
-	public static final Font TITLE_FONT = EXTRA_BOLD_FONT.deriveFont(32f);
-	public static final Font HEADING_FONT = BOLD_FONT.deriveFont(18f);
-	public static final Font DEFAULT_FONT = REGULAR_FONT.deriveFont(16f);
+	public static final Font EXTRA_BOLD_FONT = _EXTRA_BOLD_FONT.deriveFont(32f);
+	public static final Font BOLD_FONT = _BOLD_FONT.deriveFont(18f);
+	public static final Font REGULAR_FONT = _REGULAR_FONT.deriveFont(16f);
+	
 
 	// Bordes y padding.
 	public static final Border NO_BORDER = BorderFactory.createEmptyBorder();
@@ -79,18 +80,18 @@ public final class UIStyle {
 	 */
 
 	// Panel.
-	public static JPanel createStyledPanel() {
+	public static JPanel defaultPanel() {
 		JPanel panel = new BackgroundPanel("background.png", 0.25);
 		panel.setBorder(PANEL_PADDING);
 		return panel;
 	}
 
 	// Botón.
-	public static JButton createStyledButton(String text, Color bgColor) {
+	public static JButton defaultButton(String text, Color bgColor) {
 		JButton button = new JButton(text.toUpperCase());
 		button.setBackground(bgColor);
 		button.setForeground(BUTTON_TEXT_COLOR);
-		button.setFont(HEADING_FONT);
+		button.setFont(BOLD_FONT);
 		button.setMaximumSize(new Dimension(200, 40));
 		button.setFocusable(false);
 		button.setFocusPainted(false);
@@ -127,9 +128,9 @@ public final class UIStyle {
 	}
 
 	// Botón de título.
-	public static JButton createStyledTitleButton(String text) {
+	public static JButton titleButton(String text) {
 		JButton titleButton = new JButton(text);
-		titleButton.setFont(TITLE_FONT.deriveFont(64f));
+		titleButton.setFont(EXTRA_BOLD_FONT.deriveFont(64f));
 		titleButton.setForeground(BUTTON_TEXT_COLOR);
 		titleButton.setOpaque(false);
 		titleButton.setContentAreaFilled(false);
@@ -172,8 +173,8 @@ public final class UIStyle {
 		return titleButton;
 	}
 
-	// Label.
-	public static JLabel createStyledLabel(String text, Font font, Color color) {
+	// Label Normal.
+	public static JLabel defaultLabel(String text, Font font, Color color) {
 		JLabel label = new JLabel(text, SwingConstants.CENTER);
 		label.setFont(font);
 		label.setForeground(color);
@@ -182,19 +183,29 @@ public final class UIStyle {
 	}
 
 	// Label de Cabecera.
-	public static JLabel createStyledHeadingLabel(String text) {
+	public static JLabel headingLabel(String text) {
 		JLabel label = new JLabel(text.toUpperCase(), SwingConstants.CENTER);
-		label.setFont(HEADING_FONT);
+		label.setFont(BOLD_FONT);
 		label.setForeground(SECONDARY_COLOR);
 		label.setOpaque(false);
 
 		return label;
 	}
+	
+	// Label Cronómetro.
+	public static JLabel timerLabel() {
+		JLabel timer = new JLabel();
+		timer.setHorizontalAlignment(SwingConstants.CENTER);
+		timer.setFont(_EXTRA_BOLD_FONT.deriveFont(32f));
+		timer.setForeground(TEXT_COLOR);
+		
+		return timer;
+	}
 
 	// Slider.
-	public static void createStyledSlider(JSlider slider) {
+	public static void defaultSlider(JSlider slider) {
 		slider.setForeground(TEXT_COLOR);
-		slider.setFont(DEFAULT_FONT);
+		slider.setFont(REGULAR_FONT);
 		slider.setOpaque(false);
 		slider.setBorder(new EmptyBorder(5, 5, 5, 5));
 		slider.setMajorTickSpacing(10);

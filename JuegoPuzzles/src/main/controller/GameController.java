@@ -49,7 +49,7 @@ public class GameController {
 
 				// Actualizar el cronómetro en la interfaz.
 				long timeRemaining = gameState.getTimeRemaining();
-				String timeText = "Tiempo restante: " + TimeUtils.formatTime(timeRemaining) + " min";
+				String timeText = TimeUtils.formatTime(timeRemaining);
 
 				// Actualizar el cronómetro en PuzzleBoard.
 				if(gameWindow.getCurrentPuzzleBoard() != null) {
